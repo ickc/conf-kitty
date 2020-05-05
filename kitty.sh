@@ -143,10 +143,14 @@ font_family      "Fira Code"
 #: Cursor customization {{{
 
 # cursor #cccccc
+# base0
+cursor                  #839496
 
 #: Default cursor color
 
 # cursor_text_color #111111
+# base03
+cursor_text_color    background
 
 #: Choose the color of text under the cursor. If you want it rendered
 #: with the background color of the cell underneath instead, use the
@@ -573,7 +577,12 @@ font_family      "Fira Code"
 #: Color scheme {{{
 
 # foreground #dddddd
+# base0
+foreground              #839496
+
 # background #000000
+# base03
+background              #002b36
 
 #: The foreground and background colors
 
@@ -630,11 +639,15 @@ font_family      "Fira Code"
 #: means no dimming and zero means fully dimmed (i.e. invisible).
 
 # selection_foreground #000000
+# base03
+selection_foreground    #002b36
 
 #: The foreground for text selected with the mouse. A value of none
 #: means to leave the color unchanged.
 
 # selection_background #fffacd
+# base0
+selection_background    #839496
 
 #: The background for text selected with the mouse.
 
@@ -644,67 +657,73 @@ font_family      "Fira Code"
 #: the 256 color table as color16 to color255.
 
 # color0 #000000
+# base02
+color0                  #073642
 # color8 #767676
+# base03
+color8                  #002b36
 
 #: black
 
 # color1 #cc0403
+# red
+color1                  #dc322f
 # color9 #f2201f
+# orange
+color9                  #cb4b16
 
 #: red
 
 # color2  #19cb00
+# green
+color2                  #859900
 # color10 #23fd00
+# base01
+color10                 #586e75
 
 #: green
 
 # color3  #cecb00
+# yellow
+color3                  #b58900
 # color11 #fffd00
+# base00
+color11                 #657b83
 
 #: yellow
 
 # color4  #0d73cc
+# blue
+color4                  #268bd2
 # color12 #1a8fff
+# base0
+color12                 #839496
 
 #: blue
 
 # color5  #cb1ed1
+# magenta
+color5                  #d33682
 # color13 #fd28ff
+# violet
+color13                 #6c71c4
 
 #: magenta
 
 # color6  #0dcdcd
+# cyan
+color6                  #2aa198
 # color14 #14ffff
+# base1
+color14                 #93a1a1
 
 #: cyan
 
 # color7  #dddddd
-# color15 #ffffff
-
-# https://github.com/kovidgoyal/kitty/issues/897
-
-background              #002b36
-foreground              #839496
-cursor                  #93a1a1
-
-selection_background    #81908f
-selection_foreground    #002831
-
-color0                  #073642
-color1                  #dc322f
-color2                  #859900
-color3                  #b58900
-color4                  #268bd2
-color5                  #d33682
-color6                  #2aa198
+# base2
 color7                  #eee8d5
-color9                  #cb4b16
-color8                  #002b36
-color10                 #586e75
-color11                 #657b83
-color12                 #839496
-color13                 #6c71c4
-color14                 #93a1a1
+# color15 #ffffff
+# base3
 color15                 #fdf6e3
 
 #: white
