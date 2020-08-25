@@ -84,6 +84,10 @@ font_family      "Fira Code"
 #:     map alt+2 disable_ligatures_in all never
 #:     map alt+3 disable_ligatures_in tab cursor
 
+#: Note that this refers to programming ligatures, typically
+#: implemented using the calt OpenType feature. For disabling general
+#: ligatures, use the font_features setting.
+
 # font_features none
 
 #: Choose exactly which OpenType features to enable or disable. This
@@ -142,13 +146,11 @@ font_family      "Fira Code"
 
 #: Cursor customization {{{
 
-# cursor #cccccc
 # base0
 cursor                  #839496
 
 #: Default cursor color
 
-# cursor_text_color #111111
 # base03
 cursor_text_color    background
 
@@ -199,7 +201,8 @@ cursor_text_color    background
 #: it, make sure the program you use can handle ANSI escape sequences
 #: for colors and text formatting. INPUT_LINE_NUMBER in the command
 #: line above will be replaced by an integer representing which line
-#: should be at the top of the screen.
+#: should be at the top of the screen. Similarly CURSOR_LINE and
+#: CURSOR_COLUMN will be replaced by the current cursor position.
 
 # scrollback_pager_history_size 0
 
@@ -228,7 +231,7 @@ cursor_text_color    background
 
 #: Mouse {{{
 
-# mouse_hide_wait 0.0
+# mouse_hide_wait 3.0
 
 #: Hide mouse cursor after the specified number of seconds of the
 #: mouse not being used. Set to zero to disable mouse cursor hiding.
@@ -291,7 +294,7 @@ cursor_text_color    background
 #: The modifiers to override mouse selection even when a terminal
 #: application has grabbed the mouse
 
-# select_by_word_characters :@-./_~?&=%+#
+# select_by_word_characters @-./_~?&=%+#
 
 #: Characters considered part of a word when double clicking. In
 #: addition to these characters any character that is marked as an
@@ -500,6 +503,13 @@ cursor_text_color    background
 #: when resizing the OS window. Note that this does not currently work
 #: on Wayland.
 
+# confirm_os_window_close 0
+
+#: Ask for confirmation when closing an OS window or a tab that has at
+#: least this number of kitty windows in it. A value of zero disables
+#: confirmation. This confirmation also applies to requests to quit
+#: the entire application (all OS windows, via the quit action).
+
 #: }}}
 
 #: Tab bar {{{
@@ -551,7 +561,11 @@ cursor_text_color    background
 #: A template to render the tab title. The default just renders the
 #: title. If you wish to include the tab-index as well, use something
 #: like: {index}: {title}. Useful if you have shortcuts mapped for
-#: goto_tab N.
+#: goto_tab N. In addition you can use {layout_name} for the current
+#: layout name and {num_windows} for the number of windows in the tab.
+#: Note that formatting is done by Python's string formatting
+#: machinery, so you can use, for instance, {layout_name[:2].upper()}
+#: to show only the first two letters of the layout name, upper-cased.
 
 # active_tab_title_template none
 
@@ -576,11 +590,9 @@ cursor_text_color    background
 
 #: Color scheme {{{
 
-# foreground #dddddd
 # base0
 foreground              #839496
 
-# background #000000
 # base03
 background              #002b36
 
@@ -638,14 +650,12 @@ background              #002b36
 #: How much to dim text that has the DIM/FAINT attribute set. One
 #: means no dimming and zero means fully dimmed (i.e. invisible).
 
-# selection_foreground #000000
 # base03
 selection_foreground    #002b36
 
 #: The foreground for text selected with the mouse. A value of none
 #: means to leave the color unchanged.
 
-# selection_background #fffacd
 # base0
 selection_background    #839496
 
@@ -656,73 +666,57 @@ selection_background    #839496
 #: dull and bright version. You can also set the remaining colors from
 #: the 256 color table as color16 to color255.
 
-# color0 #000000
 # base02
 color0                  #073642
-# color8 #767676
 # base03
 color8                  #002b36
 
 #: black
 
-# color1 #cc0403
 # red
 color1                  #dc322f
-# color9 #f2201f
 # orange
 color9                  #cb4b16
 
 #: red
 
-# color2  #19cb00
 # green
 color2                  #859900
-# color10 #23fd00
 # base01
 color10                 #586e75
 
 #: green
 
-# color3  #cecb00
 # yellow
 color3                  #b58900
-# color11 #fffd00
 # base00
 color11                 #657b83
 
 #: yellow
 
-# color4  #0d73cc
 # blue
 color4                  #268bd2
-# color12 #1a8fff
 # base0
 color12                 #839496
 
 #: blue
 
-# color5  #cb1ed1
 # magenta
 color5                  #d33682
-# color13 #fd28ff
 # violet
 color13                 #6c71c4
 
 #: magenta
 
-# color6  #0dcdcd
 # cyan
 color6                  #2aa198
-# color14 #14ffff
 # base1
 color14                 #93a1a1
 
 #: cyan
 
-# color7  #dddddd
 # base2
 color7                  #eee8d5
-# color15 #ffffff
 # base3
 color15                 #fdf6e3
 
@@ -1024,9 +1018,7 @@ color15                 #fdf6e3
 #: will copy and clear the selection or send an interrupt if there is
 #: no selection.
 
-# map cmd+c        copy_to_clipboard
 # map kitty_mod+v  paste_from_clipboard
-# map cmd+v        paste_from_clipboard
 # map kitty_mod+s  paste_from_selection
 # map shift+insert paste_from_selection
 # map kitty_mod+o  pass_selection_to_program
@@ -1049,21 +1041,13 @@ color15                 #fdf6e3
 #: Scrolling {{{
 
 # map kitty_mod+up        scroll_line_up
-# map alt+cmd+page_up     scroll_line_up
-# map cmd+up              scroll_line_up
 # map kitty_mod+k         scroll_line_up
 # map kitty_mod+down      scroll_line_down
 # map kitty_mod+j         scroll_line_down
-# map alt+cmd+page_down   scroll_line_down
-# map cmd+down            scroll_line_down
 # map kitty_mod+page_up   scroll_page_up
-# map cmd+page_up         scroll_page_up
 # map kitty_mod+page_down scroll_page_down
-# map cmd+page_down       scroll_page_down
 # map kitty_mod+home      scroll_home
-# map cmd+home            scroll_home
 # map kitty_mod+end       scroll_end
-# map cmd+end             scroll_end
 # map kitty_mod+h         show_scrollback
 
 #: You can pipe the contents of the current screen + history buffer as
@@ -1107,60 +1091,40 @@ color15                 #fdf6e3
 
 #: For more details, see launch.
 
-# map cmd+enter   new_window
 # map kitty_mod+n new_os_window
 
 #: Works like new_window above, except that it opens a top level OS
 #: kitty window. In particular you can use new_os_window_with_cwd to
 #: open a window with the current working directory.
 
-# map cmd+n       new_os_window
 # map kitty_mod+w close_window
-# map shift+cmd+d close_window
 # map kitty_mod+] next_window
 # map kitty_mod+[ previous_window
 # map kitty_mod+f move_window_forward
 # map kitty_mod+b move_window_backward
 # map kitty_mod+` move_window_to_top
 # map kitty_mod+r start_resizing_window
-# map cmd+r       start_resizing_window
 # map kitty_mod+1 first_window
-# map cmd+1       first_window
 # map kitty_mod+2 second_window
-# map cmd+2       second_window
 # map kitty_mod+3 third_window
-# map cmd+3       third_window
 # map kitty_mod+4 fourth_window
-# map cmd+4       fourth_window
 # map kitty_mod+5 fifth_window
-# map cmd+5       fifth_window
 # map kitty_mod+6 sixth_window
-# map cmd+6       sixth_window
 # map kitty_mod+7 seventh_window
-# map cmd+7       seventh_window
 # map kitty_mod+8 eighth_window
-# map cmd+8       eighth_window
 # map kitty_mod+9 ninth_window
-# map cmd+9       ninth_window
 # map kitty_mod+0 tenth_window
 #: }}}
 
 #: Tab management {{{
 
 # map kitty_mod+right next_tab
-# map ctrl+tab        next_tab
-# map shift+cmd+]     next_tab
 # map kitty_mod+left  previous_tab
-# map shift+ctrl+tab  previous_tab
-# map shift+cmd+[     previous_tab
 # map kitty_mod+t     new_tab
-# map cmd+t           new_tab
 # map kitty_mod+q     close_tab
-# map cmd+w           close_tab
 # map kitty_mod+.     move_tab_forward
 # map kitty_mod+,     move_tab_backward
 # map kitty_mod+alt+t set_tab_title
-# map shift+cmd+i     set_tab_title
 
 #: You can also create shortcuts to go to specific tabs, with 1 being
 #: the first tab, 2 the second tab and -1 being the previously active
@@ -1197,11 +1161,8 @@ color15                 #fdf6e3
 #: a time or only the current one.
 
 # map kitty_mod+equal     change_font_size all +2.0
-# map cmd+plus            change_font_size all +2.0
 # map kitty_mod+minus     change_font_size all -2.0
-# map cmd+minus           change_font_size all -2.0
 # map kitty_mod+backspace change_font_size all 0
-# map cmd+0               change_font_size all 0
 
 #: To setup shortcuts for specific font sizes::
 
