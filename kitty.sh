@@ -7,10 +7,9 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 
-font_family      "Fira Code"
 # font_family    "CaskaydiaCove Nerd Font"
 # font_family    "FiraCode Nerd Font"
-# font_family    "Hasklug Nerd Font"
+font_family      "Hasklug Nerd Font"
 # font_family    "Monoid Nerd Font"
 # bold_font        auto
 # italic_font      auto
